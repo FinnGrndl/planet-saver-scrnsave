@@ -13,9 +13,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup PowerShell
-        uses: actions/setup-powershell@v4
-
       - name: Install PSScriptAnalyzer
         shell: pwsh
         run: |
@@ -30,5 +27,5 @@ jobs:
       - name: Smoke Test
         shell: pwsh
         run: |
-          Test-Path "$env:WINDIR\System32\scrnsave.scr" | Out-Null
+          if (-not (Test-Path "$env:WINDIR\System32\scrnsave.scr")) { exit 1 }
           Write-Host "scrnsave.scr vorhanden: OK"
