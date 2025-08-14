@@ -1,0 +1,31 @@
+name: Changelog
+
+on:
+  push:
+    tags:
+      - "v*.*.*"     
+
+permissions:
+  contents: write  
+
+jobs:
+  update-changelog:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout (mit Tags)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0      
+
+      - name: Generate CHANGELOG from tags
+        shell: pwsh
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          pwsh -File scripts/Update-Changelog.ps1
+
+      - name: Commit & push CHANGELOG
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs(changelog): update for ${{ github.ref_name }}"
+          file_pattern: CHANGELOG.md
