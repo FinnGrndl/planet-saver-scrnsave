@@ -157,6 +157,6 @@ Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "PlanetSaverS
 
 ## Lizenz
 
-MIT – siehe [LICENSE](./LICENSE).
+MIT – siehe [LICENSE](./LICENCE).
 
 ````
